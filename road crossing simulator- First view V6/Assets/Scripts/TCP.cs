@@ -139,27 +139,27 @@ public class TCP : MonoBehaviour
 
                 // ----- WRITE BACK TO SERVER -----
                 // Send reset frame (all zeros)
-                byte[] empty = new byte[272];
-                stream.Write(empty, 0, 272);
+                // byte[] empty = new byte[272];
+                // stream.Write(empty, 0, 272);
 
-                byte[] resetData = new byte[1024]; // 256 floats = 1024 bytes
+                // byte[] resetData = new byte[1024]; // 256 floats = 1024 bytes
 
-                for (int i = 0; i < 256; i++)
-                {
-                    float value = 0f;
+                // for (int i = 0; i < 256; i++)
+                // {
+                //     float value = 0f;
 
-                    byte[] floatBytes = BitConverter.GetBytes(value);
+                //     byte[] floatBytes = BitConverter.GetBytes(value);
 
-                    if (BitConverter.IsLittleEndian)
-                        Array.Reverse(floatBytes);
+                //     if (BitConverter.IsLittleEndian)
+                //         Array.Reverse(floatBytes);
 
-                    Buffer.BlockCopy(floatBytes, 0, resetData, i * 4, 4);
-                }
+                //     Buffer.BlockCopy(floatBytes, 0, resetData, i * 4, 4);
+                // }
 
-                stream.Write(resetData, 0, 1024);
+                // stream.Write(resetData, 0, 1024);
 
-                // Optional small delay
-                Thread.Sleep(50);
+                // // Optional small delay
+                // Thread.Sleep(50);
 
                 if (sendZeroToDFlow)
                 {
