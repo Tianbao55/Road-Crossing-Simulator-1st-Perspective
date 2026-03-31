@@ -138,26 +138,31 @@ public class TCP : MonoBehaviour
                 Head_Back_Pos.z = BitConverter.ToSingle(floatData, 24);
 
                 // ----- WRITE BACK TO SERVER -----
+                // Send reset frame (all zeros)
+                byte[] empty = new byte[272];
+                stream.Write(empty, 0, 272);
+
+                byte[] resetData = new byte[1024]; // 256 floats = 1024 bytes
+
+                for (int i = 0; i < 256; i++)
+                {
+                    float value = 0f;
+
+                    byte[] floatBytes = BitConverter.GetBytes(value);
+
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(floatBytes);
+
+                    Buffer.BlockCopy(floatBytes, 0, resetData, i * 4, 4);
+                }
+
+                stream.Write(resetData, 0, 1024);
+
+                // Optional small delay
+                Thread.Sleep(50);
 
                 if (sendZeroToDFlow)
                 {
-                    // // Send empty header (272 bytes)
-                    // byte[] emptyHeader = new byte[272];
-                    // stream.Write(emptyHeader, 0, 272);
-
-                    // // Send 256 floats of 0f (1024 bytes)
-                    // byte[] sendData = new byte[1024];
-                    // for (int i = 0; i < 256; i++)
-                    // {
-                    //     byte[] zeroBytes = BitConverter.GetBytes(1f);
-                    //     if (BitConverter.IsLittleEndian)
-                    //         Array.Reverse(zeroBytes);
-                    //     Buffer.BlockCopy(zeroBytes, 0, sendData, i * 4, 4);
-                    // }
-                    // stream.Write(sendData, 0, 1024);
-
-                    // // Optional tiny delay to reduce CPU usage
-                    // Thread.Sleep(10);
                     // Send empty header (272 bytes)
                     byte[] emptyHeader = new byte[272];
                     stream.Write(emptyHeader, 0, 272);
