@@ -12,66 +12,54 @@ public class DegreeCal : MonoBehaviour
 
     public CamOfMarkers cameraController;  // Reference to the camera controller script
 
+    // void Update()
+    // {
+    //     if (!GameManager.instance.GameStart) return;
+
+    //     Vector3 headFront = tcp.Head_Front_Pos;
+    //     Vector3 headBack = tcp.Head_Back_Pos;
+
+    //     if (headFront == Vector3.zero || headBack == Vector3.zero)
+    //         return;
+
+    //     Vector3 dir = headFront - headBack;
+
+    //     // Calculate head direction vector (from back to front marker)
+    //     // Vector3 dir = headFront.position - headBack.position;
+
+    //     // ----- Yaw calculation (horizontal rotation) -----
+    //     // Project onto horizontal plane to ignore vertical movement
+    //     Vector3 dirHorizontal = Vector3.ProjectOnPlane(dir, Vector3.up).normalized;
+    //     float yaw = Vector3.SignedAngle(Vector3.forward, dirHorizontal, Vector3.up);
+
+    //     // ----- Pitch calculation (vertical rotation) -----
+    //     // Angle between horizontal projection and full direction vector
+    //     float pitch = Vector3.SignedAngle(dirHorizontal, dir, Vector3.right);
+
+    //     // Set camera rotation: pitch = up/down, yaw = left/right
+    //     cameraController.SetCameraRotation(pitch, yaw);
+    // }
+
     void Update()
     {
         if (!GameManager.instance.GameStart) return;
 
-        Vector3 headFront = tcp.Head_Front_Pos;
-        Vector3 headBack = tcp.Head_Back_Pos;
+        Vector3 forward = ((tcp.LFHD.position + tcp.RFHD.position) / 2f) - ((tcp.LBHD.position + tcp.RBHD.position) / 2f);
+        Vector3 right = ((tcp.RFHD.position + tcp.RBHD.position) / 2f) - ((tcp.LFHD.position + tcp.LBHD.position) / 2f);
+        Vector3 up = Vector3.Cross(forward, right);
 
-        if (headFront == Vector3.zero || headBack == Vector3.zero)
+        if (forward.magnitude < 0.001f || up.magnitude < 0.001f)
             return;
 
-        Vector3 dir = headFront - headBack;
+        Quaternion headRotation = Quaternion.LookRotation(forward, up);
+        Vector3 euler = headRotation.eulerAngles;
 
-        // Calculate head direction vector (from back to front marker)
-        // Vector3 dir = headFront.position - headBack.position;
-
-        // ----- Yaw calculation (horizontal rotation) -----
-        // Project onto horizontal plane to ignore vertical movement
-        Vector3 dirHorizontal = Vector3.ProjectOnPlane(dir, Vector3.up).normalized;
-        float yaw = Vector3.SignedAngle(Vector3.forward, dirHorizontal, Vector3.up);
-
-        // ----- Pitch calculation (vertical rotation) -----
-        // Angle between horizontal projection and full direction vector
-        float pitch = Vector3.SignedAngle(dirHorizontal, dir, Vector3.right);
+        float pitch = euler.x;
+        float yaw = euler.y;
+        float roll = euler.z;
 
         // Set camera rotation: pitch = up/down, yaw = left/right
-        cameraController.SetCameraRotation(pitch, yaw);
+        cameraController.SetCameraRotation(pitch, yaw, roll);
     }
 }
 
-// Version:2.0 (with baseline)
-// using UnityEngine;
-
-// public class DegreeCal : MonoBehaviour
-// {
-//     public Transform headFront;
-//     public Transform headBack;
-
-//     public CamOfMarkers cameraController;
-
-//     private Vector3 baselineDir;
-//     private bool calibrated = false;
-
-//     // Update is called once per frame
-//     void Update()
-//     {
-//         if (!GameManager.instance.GameStart) return;
-//         Vector3 dir = headFront.position - headBack.position;
-//         dir = Vector3.ProjectOnPlane(dir, Vector3.up).normalized;
-
-//         if (Input.GetKeyDown(KeyCode.C))
-//         {
-//             baselineDir = dir;
-//             calibrated = true;
-//             Debug.Log("Calibration Done");
-//         }
-
-//         if (!calibrated) return;
-
-//         float yaw = Vector3.SignedAngle(baselineDir, dir, Vector3.up);
-//         cameraController.SetCameraRotation(0f, yaw);
-
-//     }
-// }

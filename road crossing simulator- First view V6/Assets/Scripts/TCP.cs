@@ -26,6 +26,11 @@ public class TCP : MonoBehaviour
     public Vector3 Head_Front_Pos;            // Front marker position
     public Vector3 Head_Back_Pos;             // Back marker position
 
+    public Transform LFHD;
+    public Transform RFHD;
+    public Transform LBHD;
+    public Transform RBHD;
+
     public bool sendZeroToDFlow = true;
 
     public PlatformState platform = new PlatformState();
@@ -136,30 +141,6 @@ public class TCP : MonoBehaviour
                 Head_Back_Pos.x = BitConverter.ToSingle(floatData, 16);
                 Head_Back_Pos.y = BitConverter.ToSingle(floatData, 20);
                 Head_Back_Pos.z = BitConverter.ToSingle(floatData, 24);
-
-                // ----- WRITE BACK TO SERVER -----
-                // Send reset frame (all zeros)
-                // byte[] empty = new byte[272];
-                // stream.Write(empty, 0, 272);
-
-                // byte[] resetData = new byte[1024]; // 256 floats = 1024 bytes
-
-                // for (int i = 0; i < 256; i++)
-                // {
-                //     float value = 0f;
-
-                //     byte[] floatBytes = BitConverter.GetBytes(value);
-
-                //     if (BitConverter.IsLittleEndian)
-                //         Array.Reverse(floatBytes);
-
-                //     Buffer.BlockCopy(floatBytes, 0, resetData, i * 4, 4);
-                // }
-
-                // stream.Write(resetData, 0, 1024);
-
-                // // Optional small delay
-                // Thread.Sleep(50);
 
                 if (sendZeroToDFlow)
                 {
