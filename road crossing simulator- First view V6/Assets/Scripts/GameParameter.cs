@@ -14,8 +14,12 @@ public class GameParameter : MonoBehaviour
     public CarSpawn carSpawner;        // Reference to the car spawner
 
     [Header("Game Settings")]
-    public string currentDirection;    // Selected driving direction
-    public int RoundNum;               // Number of rounds for the game
+    public string currentDirection = "Left";    // Selected driving direction
+    public string currentCamera = "Fixed";       // Selected camera view
+    public int RoundNum = 2;               // Number of rounds for the game
+
+    public GameObject fixedCamera;   // Reference to the fixed camera
+    public GameObject followCamera;  // Reference to the follow camera
 
     /// <summary>
     /// Update the car speed based on input string (km/h -> m/s conversion)
@@ -62,6 +66,31 @@ public class GameParameter : MonoBehaviour
         }
 
         Debug.Log("Direction selected: " + currentDirection);
+    }
+
+    public void OnCameraChanged(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                currentCamera = "Fixed";
+                break;
+            case 1:
+                currentCamera = "Follow";
+                break;
+            default:
+                currentCamera = "Fixed";
+                Debug.LogWarning("Invalid dropdown index! Defaulting to Fixed.");
+                break;
+        }
+
+        Debug.Log("Camera selected: " + currentCamera);
+        UpdateCamera();
+    }
+    private void UpdateCamera()
+    {
+        if (fixedCamera != null) fixedCamera.SetActive(currentCamera == "Fixed");
+        if (followCamera != null) followCamera.SetActive(currentCamera == "Follow");
     }
 
     /// <summary>

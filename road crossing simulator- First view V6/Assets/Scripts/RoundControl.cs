@@ -105,16 +105,6 @@ public class RoundControl : MonoBehaviour
         {
             yield return new WaitForSeconds(5f); // Wait 5 seconds before creating the next segment
             buildingNum = Random.Range(0, buildings.Length); // Randomly select a building prefab
-            // Instantiate a building segment at the new position
-            // Instantiate(
-            //     buildings[buildingNum],
-            //     new Vector3(
-            //         buildings[0].transform.position.x + currentRound * segmentLength,
-            //         buildings[0].transform.position.y,
-            //         buildings[0].transform.position.z
-            //     ),
-            //     Quaternion.identity
-            // );
             Instantiate(
                 buildings[buildingNum],
                 new Vector3(

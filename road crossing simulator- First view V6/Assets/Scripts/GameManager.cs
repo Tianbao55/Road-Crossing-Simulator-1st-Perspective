@@ -151,19 +151,4 @@ public class GameManager : MonoBehaviour
           Thread.Sleep(50);
           tcp.CloseTCP();
      }
-
-     // /// <summary>
-     // /// Send a UDP message in format: "value,command"
-     // /// </summary>
-     // /// <param name="command">Command string</param>
-     // /// <param name="value">Value (float)</param>
-     // public void SendUDP(string command, float value)
-     // {
-     //      string message = value.ToString() + "," + command;
-     //      byte[] data = Encoding.UTF8.GetBytes(message);
-
-     //      udpClient.Send(data, data.Length, remoteIP, remotePort);
-
-     //      Debug.Log("Message sent: " + message);
-     // }
 }
