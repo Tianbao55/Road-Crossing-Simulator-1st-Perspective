@@ -23,13 +23,20 @@ public class TCP : MonoBehaviour
 
     private int clientIndex = 0;             // Client index received from server during handshake
 
-    public Vector3 Head_Front_Pos;            // Front marker position
-    public Vector3 Head_Back_Pos;             // Back marker position
+    // public Vector3 Head_Front_Pos;            // Front marker position
+    // public Vector3 Head_Back_Pos;             // Back marker position
 
+    // simulation in Unity
     public Transform LFHD;
     public Transform RFHD;
     public Transform LBHD;
     public Transform RBHD;
+
+    // use Vicon
+    // public Vector3 LFHD;
+    // public Vector3 RFHD;
+    // public Vector3 LBHD;
+    // public Vector3 RBHD;
 
     public bool sendZeroToDFlow = true;
 
@@ -128,19 +135,60 @@ public class TCP : MonoBehaviour
 
                 if (BitConverter.IsLittleEndian)
                 {
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < 13; i++)
                     {
                         Array.Reverse(floatData, i * 4, 4);
                     }
                 }
 
                 externalSpeed = BitConverter.ToSingle(floatData, 0);
-                Head_Front_Pos.x = BitConverter.ToSingle(floatData, 4);
-                Head_Front_Pos.y = BitConverter.ToSingle(floatData, 8);
-                Head_Front_Pos.z = BitConverter.ToSingle(floatData, 12);
-                Head_Back_Pos.x = BitConverter.ToSingle(floatData, 16);
-                Head_Back_Pos.y = BitConverter.ToSingle(floatData, 20);
-                Head_Back_Pos.z = BitConverter.ToSingle(floatData, 24);
+
+                // use Vicon
+                // Head_Front_Pos.x = BitConverter.ToSingle(floatData, 4);
+                // Head_Front_Pos.y = BitConverter.ToSingle(floatData, 8);
+                // Head_Front_Pos.z = BitConverter.ToSingle(floatData, 12);
+                // Head_Back_Pos.x = BitConverter.ToSingle(floatData, 16);
+                // Head_Back_Pos.y = BitConverter.ToSingle(floatData, 20);
+                // Head_Back_Pos.z = BitConverter.ToSingle(floatData, 24);
+
+                // LFHD.position.x = BitConverter.ToSingle(floatData, 4);
+                // LFHD.position.y = BitConverter.ToSingle(floatData, 8);
+                // LFHD.position.z = BitConverter.ToSingle(floatData, 12);
+                // RFHD.position.x = BitConverter.ToSingle(floatData, 16);
+                // RFHD.position.y = BitConverter.ToSingle(floatData, 20);
+                // RFHD.position.z = BitConverter.ToSingle(floatData, 24);
+                // LBHD.position.x = BitConverter.ToSingle(floatData, 28);
+                // LBHD.position.y = BitConverter.ToSingle(floatData, 32);
+                // LBHD.position.z = BitConverter.ToSingle(floatData, 36);
+                // RBHD.position.x = BitConverter.ToSingle(floatData, 40);
+                // RBHD.position.y = BitConverter.ToSingle(floatData, 44);
+                // RBHD.position.z = BitConverter.ToSingle(floatData, 48);
+
+                // simulation in Unity
+                LFHD.position = new Vector3(
+                    BitConverter.ToSingle(floatData, 4),
+                    BitConverter.ToSingle(floatData, 8),
+                    BitConverter.ToSingle(floatData, 12)
+                );
+
+                RFHD.position = new Vector3(
+                    BitConverter.ToSingle(floatData, 16),
+                    BitConverter.ToSingle(floatData, 20),
+                    BitConverter.ToSingle(floatData, 24)
+                );
+
+                LBHD.position = new Vector3(
+                    BitConverter.ToSingle(floatData, 28),
+                    BitConverter.ToSingle(floatData, 32),
+                    BitConverter.ToSingle(floatData, 36)
+                );
+
+                RBHD.position = new Vector3(
+                    BitConverter.ToSingle(floatData, 40),
+                    BitConverter.ToSingle(floatData, 44),
+                    BitConverter.ToSingle(floatData, 48)
+                );
+
 
                 if (sendZeroToDFlow)
                 {
