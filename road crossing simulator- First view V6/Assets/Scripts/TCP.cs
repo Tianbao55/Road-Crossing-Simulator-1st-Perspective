@@ -26,17 +26,17 @@ public class TCP : MonoBehaviour
     // public Vector3 Head_Front_Pos;            // Front marker position
     // public Vector3 Head_Back_Pos;             // Back marker position
 
-    // simulation in Unity
-    public Transform LFHD;
-    public Transform RFHD;
-    public Transform LBHD;
-    public Transform RBHD;
+    // // simulation in Unity
+    // public Transform LFHD;
+    // public Transform RFHD;
+    // public Transform LBHD;
+    // public Transform RBHD;
 
     // use Vicon
-    // public Vector3 LFHD;
-    // public Vector3 RFHD;
-    // public Vector3 LBHD;
-    // public Vector3 RBHD;
+    public Vector3 LFHD;
+    public Vector3 RFHD;
+    public Vector3 LBHD;
+    public Vector3 RBHD;
 
     public bool sendZeroToDFlow = true;
 
@@ -151,43 +151,43 @@ public class TCP : MonoBehaviour
                 // Head_Back_Pos.y = BitConverter.ToSingle(floatData, 20);
                 // Head_Back_Pos.z = BitConverter.ToSingle(floatData, 24);
 
-                // LFHD.position.x = BitConverter.ToSingle(floatData, 4);
-                // LFHD.position.y = BitConverter.ToSingle(floatData, 8);
-                // LFHD.position.z = BitConverter.ToSingle(floatData, 12);
-                // RFHD.position.x = BitConverter.ToSingle(floatData, 16);
-                // RFHD.position.y = BitConverter.ToSingle(floatData, 20);
-                // RFHD.position.z = BitConverter.ToSingle(floatData, 24);
-                // LBHD.position.x = BitConverter.ToSingle(floatData, 28);
-                // LBHD.position.y = BitConverter.ToSingle(floatData, 32);
-                // LBHD.position.z = BitConverter.ToSingle(floatData, 36);
-                // RBHD.position.x = BitConverter.ToSingle(floatData, 40);
-                // RBHD.position.y = BitConverter.ToSingle(floatData, 44);
-                // RBHD.position.z = BitConverter.ToSingle(floatData, 48);
+                LFHD.x = BitConverter.ToSingle(floatData, 4);
+                LFHD.y = BitConverter.ToSingle(floatData, 8);
+                LFHD.z = BitConverter.ToSingle(floatData, 12);
+                RFHD.x = BitConverter.ToSingle(floatData, 16);
+                RFHD.y = BitConverter.ToSingle(floatData, 20);
+                RFHD.z = BitConverter.ToSingle(floatData, 24);
+                LBHD.x = BitConverter.ToSingle(floatData, 28);
+                LBHD.y = BitConverter.ToSingle(floatData, 32);
+                LBHD.z = BitConverter.ToSingle(floatData, 36);
+                RBHD.x = BitConverter.ToSingle(floatData, 40);
+                RBHD.y = BitConverter.ToSingle(floatData, 44);
+                RBHD.z = BitConverter.ToSingle(floatData, 48);
 
-                // simulation in Unity
-                LFHD.position = new Vector3(
-                    BitConverter.ToSingle(floatData, 4),
-                    BitConverter.ToSingle(floatData, 8),
-                    BitConverter.ToSingle(floatData, 12)
-                );
+                // // simulation in Unity
+                // LFHD.position = new Vector3(
+                //     BitConverter.ToSingle(floatData, 4),
+                //     BitConverter.ToSingle(floatData, 8),
+                //     BitConverter.ToSingle(floatData, 12)
+                // );
 
-                RFHD.position = new Vector3(
-                    BitConverter.ToSingle(floatData, 16),
-                    BitConverter.ToSingle(floatData, 20),
-                    BitConverter.ToSingle(floatData, 24)
-                );
+                // RFHD.position = new Vector3(
+                //     BitConverter.ToSingle(floatData, 16),
+                //     BitConverter.ToSingle(floatData, 20),
+                //     BitConverter.ToSingle(floatData, 24)
+                // );
 
-                LBHD.position = new Vector3(
-                    BitConverter.ToSingle(floatData, 28),
-                    BitConverter.ToSingle(floatData, 32),
-                    BitConverter.ToSingle(floatData, 36)
-                );
+                // LBHD.position = new Vector3(
+                //     BitConverter.ToSingle(floatData, 28),
+                //     BitConverter.ToSingle(floatData, 32),
+                //     BitConverter.ToSingle(floatData, 36)
+                // );
 
-                RBHD.position = new Vector3(
-                    BitConverter.ToSingle(floatData, 40),
-                    BitConverter.ToSingle(floatData, 44),
-                    BitConverter.ToSingle(floatData, 48)
-                );
+                // RBHD.position = new Vector3(
+                //     BitConverter.ToSingle(floatData, 40),
+                //     BitConverter.ToSingle(floatData, 44),
+                //     BitConverter.ToSingle(floatData, 48)
+                // );
 
 
                 if (sendZeroToDFlow)
