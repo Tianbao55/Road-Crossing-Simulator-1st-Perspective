@@ -151,18 +151,24 @@ public class TCP : MonoBehaviour
                 // Head_Back_Pos.y = BitConverter.ToSingle(floatData, 20);
                 // Head_Back_Pos.z = BitConverter.ToSingle(floatData, 24);
 
-                LFHD.x = BitConverter.ToSingle(floatData, 4);
-                LFHD.y = BitConverter.ToSingle(floatData, 8);
-                LFHD.z = BitConverter.ToSingle(floatData, 12);
-                RFHD.x = BitConverter.ToSingle(floatData, 16);
-                RFHD.y = BitConverter.ToSingle(floatData, 20);
-                RFHD.z = BitConverter.ToSingle(floatData, 24);
-                LBHD.x = BitConverter.ToSingle(floatData, 28);
-                LBHD.y = BitConverter.ToSingle(floatData, 32);
-                LBHD.z = BitConverter.ToSingle(floatData, 36);
-                RBHD.x = BitConverter.ToSingle(floatData, 40);
-                RBHD.y = BitConverter.ToSingle(floatData, 44);
-                RBHD.z = BitConverter.ToSingle(floatData, 48);
+                // UnityX = -CAREN_Z, UnityY = CAREN_Y, UnityZ = -CAREN_X
+                // LFHD.x = BitConverter.ToSingle(floatData, 4);
+                // LFHD.y = BitConverter.ToSingle(floatData, 8);
+                // LFHD.z = BitConverter.ToSingle(floatData, 12);
+                // RFHD.x = BitConverter.ToSingle(floatData, 16);
+                // RFHD.y = BitConverter.ToSingle(floatData, 20);
+                // RFHD.z = BitConverter.ToSingle(floatData, 24);
+                // LBHD.x = BitConverter.ToSingle(floatData, 28);
+                // LBHD.y = BitConverter.ToSingle(floatData, 32);
+                // LBHD.z = BitConverter.ToSingle(floatData, 36);
+                // RBHD.x = BitConverter.ToSingle(floatData, 40);
+                // RBHD.y = BitConverter.ToSingle(floatData, 44);
+                // RBHD.z = BitConverter.ToSingle(floatData, 48);
+
+                LFHD = ConvertCarenToUnity(floatData, 4);
+                RFHD = ConvertCarenToUnity(floatData, 16);
+                LBHD = ConvertCarenToUnity(floatData, 28);
+                RBHD = ConvertCarenToUnity(floatData, 40);
 
                 // // simulation in Unity
                 // LFHD.position = new Vector3(
@@ -283,6 +289,15 @@ public class TCP : MonoBehaviour
         public float rotX = 0f; // Roll
         public float rotY = 0f; // Pitch
         public float rotZ = 0f; // Yaw
+    }
+
+    Vector3 ConvertCarenToUnity(byte[] data, int start)
+    {
+        float cx = BitConverter.ToSingle(data, start);
+        float cy = BitConverter.ToSingle(data, start + 4);
+        float cz = BitConverter.ToSingle(data, start + 8);
+
+        return new Vector3(-cz, cy, -cx);
     }
 }
 
