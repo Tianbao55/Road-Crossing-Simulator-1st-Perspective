@@ -33,8 +33,8 @@ public class CamOfMarkers : MonoBehaviour
         // Stop updating camera if the game has not started
         if (!GameManager.instance.GameStart) return;
 
-        // Limit the vertical rotation (pitch) to prevent camera flipping
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        // // Limit the vertical rotation (pitch) to prevent camera flipping
+        // xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // Apply rotation to the camera
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);

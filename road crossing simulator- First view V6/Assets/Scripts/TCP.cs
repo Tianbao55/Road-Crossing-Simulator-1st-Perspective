@@ -297,7 +297,7 @@ public class TCP : MonoBehaviour
         float cy = BitConverter.ToSingle(data, start + 4);
         float cz = BitConverter.ToSingle(data, start + 8);
 
-        return new Vector3(-cz, cy, -cx);
+        return new Vector3(cz, cy, -cx);
     }
 }
 
