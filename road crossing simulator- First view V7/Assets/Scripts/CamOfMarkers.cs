@@ -19,6 +19,10 @@ public class CamOfMarkers : MonoBehaviour
     // Roll rotation (tilt)
     private float zRotation = 0f;
 
+    public float inputSmoothFactor = 0.1f; // Smoothing factor for rotation changes
+    // Rotation smoothing speed
+    public float rotationSmoothSpeed = 5f;
+
     void Start()
     {
         // Initialize rotation values using the current camera rotation
@@ -33,11 +37,19 @@ public class CamOfMarkers : MonoBehaviour
         // Stop updating camera if the game has not started
         if (!GameManager.instance.GameStart) return;
 
-        // // Limit the vertical rotation (pitch) to prevent camera flipping
-        // xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        // Apply rotation to the camera
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+        // // Apply rotation to the camera
+        // transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+
+        // Target rotation
+        Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+
+        // Smooth rotation only
+        transform.localRotation = Quaternion.Slerp(
+            transform.localRotation,
+            targetRotation,
+            Time.deltaTime * rotationSmoothSpeed
+        );
 
         // Update camera position so it follows the player
         transform.position = player.position + offset;
@@ -47,8 +59,8 @@ public class CamOfMarkers : MonoBehaviour
     // For example: data from motion capture, markers, or other tracking systems
     public void SetCameraRotation(float pitch, float yaw, float roll = 0f)
     {
-        xRotation = pitch;
-        yRotation = yaw;
-        zRotation = roll;
+        xRotation = Mathf.Lerp(xRotation, pitch, inputSmoothFactor);
+        yRotation = Mathf.Lerp(yRotation, yaw, inputSmoothFactor);
+        zRotation = Mathf.Lerp(zRotation, roll, inputSmoothFactor);
     }
 }
