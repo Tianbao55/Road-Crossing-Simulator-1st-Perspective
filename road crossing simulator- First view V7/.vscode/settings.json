@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "road crossing simulator- First view V6.slnx"
+    "dotnet.defaultSolution": "road crossing simulator- First view V7.slnx"
 }
