@@ -1,6 +1,7 @@
 using System.Net.Sockets;
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class DegreeCal : MonoBehaviour
 {
@@ -30,8 +31,8 @@ public class DegreeCal : MonoBehaviour
 
         Vector3 up = Vector3.Cross(right, forward);
 
-        if (forward.magnitude < 0.001f || up.magnitude < 0.001f)
-            return;
+        // if (forward.magnitude < 0.001f || up.magnitude < 0.001f)
+        //     return;
 
         // ===============================
         // 2. Convert to Quaternion

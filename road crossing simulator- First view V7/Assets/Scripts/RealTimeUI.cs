@@ -63,7 +63,8 @@ public class RealTimeUI : MonoBehaviour
         text += $"Player Speed: {speed:F2} m/s\n";
         text += $"POSIX Time: {posixTime}\n";
         text += $"Elapsed Time after Trigger: {roundControl.elapsedTime:F2} s\n";
-        text += $"Total Round Number: {round}\n";
+        text += $"Total Round Number: {round}\n\n";
+        text += "<color=red>Press 'C' to Calibrate Camera</color>\n";
 
         // Initialize car positions
         Vector3 car1pos = Vector3.zero;

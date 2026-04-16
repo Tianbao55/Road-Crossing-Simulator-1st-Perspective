@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System;
 
-/// <summary>
+/// <summary>S
 /// TCP manages a client connection to a remote server for receiving real-time data (e.g., external speed).
 /// It connects in two stages: first to get the client index, then to the dedicated client port.
 /// </summary>
