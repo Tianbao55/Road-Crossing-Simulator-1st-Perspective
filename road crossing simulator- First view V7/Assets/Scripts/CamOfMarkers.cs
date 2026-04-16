@@ -10,14 +10,8 @@ public class CamOfMarkers : MonoBehaviour
     // Determines where the camera sits around the player
     public Vector3 offset = new Vector3(-1f, 1f, 1f);
 
-    // Pitch rotation (up and down)
-    private float xRotation = 0f;
-
-    // Yaw rotation (left and right)
-    private float yRotation = 0f;
-
-    // Roll rotation (tilt)
-    private float zRotation = 0f;
+    private Quaternion currentRotation;
+    private Quaternion targetRotation;
 
     public float inputSmoothFactor = 0.1f; // Smoothing factor for rotation changes
     // Rotation smoothing speed
@@ -25,11 +19,8 @@ public class CamOfMarkers : MonoBehaviour
 
     void Start()
     {
-        // Initialize rotation values using the current camera rotation
-        // This ensures the camera keeps its starting orientation
-        xRotation = transform.localEulerAngles.x;
-        yRotation = transform.localEulerAngles.y;
-        zRotation = transform.localEulerAngles.z;
+        currentRotation = transform.localRotation;
+        targetRotation = transform.localRotation;
     }
 
     void Update()
@@ -37,19 +28,14 @@ public class CamOfMarkers : MonoBehaviour
         // Stop updating camera if the game has not started
         if (!GameManager.instance.GameStart) return;
 
-
-        // // Apply rotation to the camera
-        // transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
-
-        // Target rotation
-        Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
-
         // Smooth rotation only
-        transform.localRotation = Quaternion.Slerp(
-            transform.localRotation,
+        currentRotation = Quaternion.Slerp(
+            currentRotation,
             targetRotation,
             Time.deltaTime * rotationSmoothSpeed
         );
+
+        transform.localRotation = currentRotation;
 
         // Update camera position so it follows the player
         transform.position = player.position + offset;
@@ -57,10 +43,8 @@ public class CamOfMarkers : MonoBehaviour
 
     // Function used to update camera rotation externally
     // For example: data from motion capture, markers, or other tracking systems
-    public void SetCameraRotation(float pitch, float yaw, float roll = 0f)
+    public void SetCameraRotation(Quaternion rotation)
     {
-        xRotation = Mathf.Lerp(xRotation, pitch, inputSmoothFactor);
-        yRotation = Mathf.Lerp(yRotation, yaw, inputSmoothFactor);
-        zRotation = Mathf.Lerp(zRotation, roll, inputSmoothFactor);
+        targetRotation = rotation;
     }
 }
