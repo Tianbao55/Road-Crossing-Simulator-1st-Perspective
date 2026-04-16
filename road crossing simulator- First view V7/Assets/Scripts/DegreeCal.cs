@@ -4,8 +4,8 @@ using System;
 
 public class DegreeCal : MonoBehaviour
 {
-    public Transform headFront;        // Front marker of the head
-    public Transform headBack;         // Back marker of the head
+    // public Transform headFront;        // Front marker of the head
+    // public Transform headBack;         // Back marker of the head
 
     // public UDPforDegree udpReceiver;
 
@@ -19,7 +19,7 @@ public class DegreeCal : MonoBehaviour
 
     private Quaternion calibrationOffset = Quaternion.identity;
     private bool isCalibrated = false;
-    private Quaternion worldReference = Quaternion.Euler(0f, 90f, 0f);
+    public Quaternion worldReference = Quaternion.Euler(0f, 90f, 0f);
 
     // void Update()
     // {
